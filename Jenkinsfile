@@ -1,27 +1,26 @@
 pipeline {
   agent any
   stages {
-    stage('Say Hello') {
-      steps {
-        sh 'echo "hello world"'
-      }
-    }
-
-    stage('Build app') {
-      agent {
-        docker {
-          image 'gradle:jdk11'
+    stage('Parallel execution') {
+      parallel {
+        stage('Say Hello') {
+          steps {
+            sh 'echo "hello world"'
+          }
         }
 
-      }
-      steps {
-        sh 'ci/build-app.sh'
-      }
-    }
+        stage('Build app') {
+          agent {
+            docker {
+              image 'gradle:jdk11'
+            }
 
-    stage('Archive') {
-      steps {
-        archiveArtifacts 'app/build/libs/'
+          }
+          steps {
+            sh 'ci/build-app.sh'
+          }
+        }
+
       }
     }
 
