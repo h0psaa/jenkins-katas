@@ -21,12 +21,12 @@ pipeline {
           }
         }
 
-      }
-    }
+        stage('') {
+          steps {
+            archiveArtifacts 'app/build/libs/'
+          }
+        }
 
-    stage('') {
-      steps {
-        archiveArtifacts 'app/build/libs/'
       }
     }
 
